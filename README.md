@@ -40,6 +40,35 @@ python3 script_3_fine_tuning.py
 ```
 directly for node classification. It seems the random seed cannot control the randomness in parameter initialization in transformer, we suggest to run the code multiple times to get good scores.
 
+## 运行结果：
+```python
+(py3) zk@DESKTOP-901DE93:/mnt/e/zk_file/project/Graph-Bert$ python script_3_fine_tuning.py 
+************ Start ************
+GrapBert, dataset: cora, residual: graph_raw, k: 7, hidden dimension: 32, hidden layer: 2, attention head: 2
+Loading cora dataset...
+Load WL Dictionary
+Load Hop Distance Dictionary
+Load Subgraph Batches
+Epoch: 0001 loss_train: 1.9542 acc_train: 0.0857 loss_val: 1.7244 acc_val: 0.3300 loss_test: 1.6776 acc_test: 0.3730 time: 0.1497s
+Epoch: 0011 loss_train: 0.0438 acc_train: 1.0000 loss_val: 0.7362 acc_val: 0.7633 loss_test: 0.6466 acc_test: 0.8010 time: 0.1392s
+Epoch: 0021 loss_train: 0.0021 acc_train: 1.0000 loss_val: 0.7884 acc_val: 0.7667 loss_test: 0.7061 acc_test: 0.8090 time: 0.1287s
+Epoch: 0031 loss_train: 0.0010 acc_train: 1.0000 loss_val: 0.8150 acc_val: 0.7867 loss_test: 0.7485 acc_test: 0.8130 time: 0.1825s
+Epoch: 0041 loss_train: 0.0019 acc_train: 1.0000 loss_val: 0.7531 acc_val: 0.8000 loss_test: 0.6747 acc_test: 0.8260 time: 0.1782s
+Epoch: 0051 loss_train: 0.0034 acc_train: 1.0000 loss_val: 0.7276 acc_val: 0.7933 loss_test: 0.6391 acc_test: 0.8270 time: 0.1420s
+Epoch: 0061 loss_train: 0.0036 acc_train: 1.0000 loss_val: 0.7293 acc_val: 0.7967 loss_test: 0.6325 acc_test: 0.8200 time: 0.1422s
+Epoch: 0071 loss_train: 0.0029 acc_train: 1.0000 loss_val: 0.7466 acc_val: 0.7900 loss_test: 0.6330 acc_test: 0.8190 time: 0.1409s
+Epoch: 0081 loss_train: 0.0030 acc_train: 1.0000 loss_val: 0.7301 acc_val: 0.7867 loss_test: 0.6285 acc_test: 0.8190 time: 0.1382s
+Epoch: 0091 loss_train: 0.0029 acc_train: 1.0000 loss_val: 0.7341 acc_val: 0.7767 loss_test: 0.6372 acc_test: 0.8160 time: 0.1802s
+Epoch: 0101 loss_train: 0.0027 acc_train: 1.0000 loss_val: 0.7337 acc_val: 0.7833 loss_test: 0.6467 acc_test: 0.8210 time: 0.1372s
+Epoch: 0111 loss_train: 0.0025 acc_train: 1.0000 loss_val: 0.7155 acc_val: 0.7900 loss_test: 0.6298 acc_test: 0.8240 time: 0.1325s
+Epoch: 0121 loss_train: 0.0024 acc_train: 1.0000 loss_val: 0.7112 acc_val: 0.7833 loss_test: 0.6402 acc_test: 0.8240 time: 0.1368s
+Epoch: 0131 loss_train: 0.0021 acc_train: 1.0000 loss_val: 0.7267 acc_val: 0.7900 loss_test: 0.6517 acc_test: 0.8220 time: 0.1424s
+Epoch: 0141 loss_train: 0.0019 acc_train: 1.0000 loss_val: 0.7589 acc_val: 0.7867 loss_test: 0.6795 acc_test: 0.8280 time: 0.1412s
+Optimization Finished!
+Total time elapsed: 23.9558s, best testing performance  0.838000, minimun loss  0.624292
+```
+
+
 ### What are the scripts used for?
 
 (1) The Graph-Bert model takes (a) node WL code, (b) intimacy based subgraph batch, (c) node hop distance as the prior inputs. These can be computed with the script_1_preprocess.py.
