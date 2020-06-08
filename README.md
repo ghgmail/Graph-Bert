@@ -88,7 +88,13 @@ You can change the "if 0" to "if 1" to turn on a script block, and the reverse t
 (2) sklearn (https://anaconda.org/anaconda/scikit-learn) 
 (3) transformers (https://anaconda.org/conda-forge/transformers) 
 (4) networkx (https://anaconda.org/anaconda/networkx) 
-
+### 运行下面的命令即可：
+```
+conda install pytorch torchvision cpuonly -c pytorch
+conda install scikit-learn
+conda install networkx
+conda install -c conda-forge transformers
+```
 
 ************************************************************************************************
 
