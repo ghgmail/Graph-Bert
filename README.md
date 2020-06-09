@@ -40,7 +40,7 @@ python3 script_3_fine_tuning.py
 ```
 directly for node classification. It seems the random seed cannot control the randomness in parameter initialization in transformer, we suggest to run the code multiple times to get good scores.
 
-## 运行结果：
+## 运行结果-节点分类任务：
 ```python
 (py3) zk@DESKTOP-901DE93:/mnt/e/zk_file/project/Graph-Bert$ python script_3_fine_tuning.py 
 ************ Start ************
@@ -67,7 +67,19 @@ Epoch: 0141 loss_train: 0.0019 acc_train: 1.0000 loss_val: 0.7589 acc_val: 0.786
 Optimization Finished!
 Total time elapsed: 23.9558s, best testing performance  0.838000, minimun loss  0.624292
 ```
-
+## 运行结果-图聚类任务
+```python
+(py3) zk@DESKTOP-901DE93:/mnt/e/zk_file/project/Graph-Bert$ python script_3_fine_tuning.py 
+************ Start ************
+GrapBert, dataset: cora, residual: graph_raw, k: 7, hidden dimension: 32, hidden layer: 2, attention head: 2
+Loading cora dataset...
+Load WL Dictionary
+Load Hop Distance Dictionary
+Load Subgraph Batches
+/home/zk/anaconda3/envs/py3/lib/python3.6/site-packages/torch/storage.py:34: FutureWarning: pickle support for Storage will be removed in 1.5. Use `torch.save` instead
+  warnings.warn("pickle support for Storage will be removed in 1.5. Use `torch.save` instead", FutureWarning)
+************ Finish ************
+```
 
 ### What are the scripts used for?
 
