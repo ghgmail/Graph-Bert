@@ -62,7 +62,7 @@ if 1:
     print('************ Finish ************')
 #------------------------------------
 
-#---- Step 2: intimacy calculation and subgraph batching ----
+#---- Step 2: intimacy calculation and subgraph batching ---- 亲密关系计算和子图批处理
 if 1:
     for k in [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]:#, 10, 15, 20, 25, 30, 35, 40, 45, 50]:
         print('************ Start ************')

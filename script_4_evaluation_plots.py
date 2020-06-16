@@ -26,7 +26,7 @@ if 0:
 
 dataset_name = 'cora'
 
-if 0:
+if 1:
     if dataset_name == 'cora':
         k = 7
     elif dataset_name == 'citeseer':
