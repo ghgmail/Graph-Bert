@@ -110,7 +110,7 @@ class DatasetLoader(dataset):
 
         adj = adj + adj.T.multiply(adj.T > adj) - adj.multiply(adj.T > adj)
         eigen_adj = None
-        if self.compute_s:
+        if self.compute_s:#计算论文中说的图亲密度矩阵
             eigen_adj = self.c * inv((sp.eye(adj.shape[0]) - (1 - self.c) * self.adj_normalize(adj)).toarray())
 
         norm_adj = self.adj_normalize(adj + sp.eye(adj.shape[0]))

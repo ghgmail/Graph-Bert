@@ -36,7 +36,7 @@ elif dataset_name == 'pubmed':
 
 
 #---- Pre-Training Task #1: Graph Bert Node Attribute Reconstruction (Cora, Citeseer, and Pubmed) ----
-if 0:
+if 1:
     #---- hyper-parameters ----
     if dataset_name == 'pubmed':
         lr = 0.001
@@ -69,7 +69,7 @@ if 0:
     data_obj.k = k
     data_obj.load_all_tag = True
 
-    bert_config = GraphBertConfig(residual_type = residual_type, k=k, x_size=nfeature, y_size=y_size, hidden_size=hidden_size, intermediate_size=intermediate_size, num_attention_heads=num_attention_heads, num_hidden_layers=num_hidden_layers)
+    bert_config = GraphBertConfig(residual_type = residual_type, k=k, x_size=nfeature, y_size=y_size, hidden_size=hidden_size, intermediate_size=intermediate_size, num_attention_heads=num_attention_heads, num_hidden_layers=num_hidden_layers)#bert需要的配置包括：残差类型、topk的数量，特征维度数量、类别数、隐层输入size、隐层输出size、隐层数量
     method_obj = MethodGraphBertNodeConstruct(bert_config)
     method_obj.max_epoch = max_epoch
     method_obj.lr = lr
@@ -87,7 +87,8 @@ if 0:
     setting_obj.prepare(data_obj, method_obj, result_obj, evaluate_obj)
     setting_obj.load_run_save_evaluate()
     # ------------------------------------------------------
-
+    print("保存节点属性重构的预训练完整模型")
+    method_obj.save_pretrained('./result/PreTrained_GraphBert/' + dataset_name + '/NodeConstruct_complete_model/')
     print('************ Finish ************')
 #------------------------------------
 

@@ -29,7 +29,7 @@ class MethodWLNodeColoring(method):
             self.node_neighbor_dict[u1][u2] = 1
             self.node_neighbor_dict[u2][u1] = 1
 
-    def WL_recursion(self, node_list):
+    def WL_recursion(self, node_list):#基于全局图的绝对角色嵌入
         iteration_count = 1
         while True:
             new_color_dict = {}

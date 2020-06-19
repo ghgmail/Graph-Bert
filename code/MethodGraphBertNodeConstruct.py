@@ -9,7 +9,7 @@ import time
 
 BertLayerNorm = torch.nn.LayerNorm
 
-class MethodGraphBertNodeConstruct(BertPreTrainedModel):
+class MethodGraphBertNodeConstruct(BertPreTrainedModel):#继承的类来自transformers库
     learning_record_dict = {}
     lr = 0.001
     weight_decay = 5e-4
@@ -66,6 +66,8 @@ class MethodGraphBertNodeConstruct(BertPreTrainedModel):
 
         print("Optimization Finished!")
         print("Total time elapsed: {:.4f}s".format(time.time() - t_begin))
+        print("保存节点属性重构的预训练graph——bert模型")
+        self.bert.save_pretrained('./result/PreTrained_GraphBert/' + "cora" + '/node_construct_pretrain_graphbert_model/')
         return time.time() - t_begin
 
     def run(self):

@@ -43,7 +43,7 @@ if 1:
     data_obj.dataset_source_folder_path = './data/' + dataset_name + '/'
     data_obj.dataset_name = dataset_name
 
-    method_obj = MethodWLNodeColoring()
+    method_obj = MethodWLNodeColoring()#返回一个节点数量长度的dict，以pickle格式存储
 
     result_obj = ResultSaving()
     result_obj.result_destination_folder_path = './result/WL/'
@@ -94,7 +94,7 @@ if 1:
 #------------------------------------
 
 #---- Step 3: Shortest path: hop distance among nodes ----
-if 1:
+if 1:#计算子图中节点到中心节点的最短路
     for k in [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]:
         print('************ Start ************')
         print('HopDistance, dataset: ' + dataset_name + ', k: ' + str(k))
