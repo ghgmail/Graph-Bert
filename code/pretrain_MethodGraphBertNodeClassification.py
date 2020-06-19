@@ -73,14 +73,17 @@ class Pretrain_MethodGraphBertNodeClassification(BertPreTrainedModel):
         accuracy = EvaluateAcc('', '')
 
         max_score = 0.0
+        for param in self.bert.parameters():
+            param.requires_grad = False
         for epoch in range(max_epoch):
             t_epoch_begin = time.time()
 
             # -------------------------
 
             self.train()
+            self.bert.train()
             optimizer.zero_grad()
-
+            
             output = self.forward(self.data['raw_embeddings'], self.data['wl_embedding'], self.data['int_embeddings'], self.data['hop_embeddings'], self.data['idx_train'])
 
             loss_train = F.cross_entropy(output, self.data['y'][self.data['idx_train']])
@@ -91,6 +94,7 @@ class Pretrain_MethodGraphBertNodeClassification(BertPreTrainedModel):
             optimizer.step()
 
             self.eval()
+            self.bert.eval()
             output = self.forward(self.data['raw_embeddings'], self.data['wl_embedding'], self.data['int_embeddings'], self.data['hop_embeddings'], self.data['idx_val'])
 
             loss_val = F.cross_entropy(output, self.data['y'][self.data['idx_val']])

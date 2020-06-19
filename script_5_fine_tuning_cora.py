@@ -45,7 +45,8 @@ if 1:
     elif dataset_name == 'cora':
         lr = 0.01
         k = 7
-        max_epoch = 150 # 150 ---- do an early stop when necessary ----
+        # max_epoch = 150 #默认 150 ---- do an early stop when necessary ----
+        max_epoch=1000
     elif dataset_name == 'citeseer':
         k = 5
         lr = 0.001
