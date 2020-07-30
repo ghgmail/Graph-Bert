@@ -128,3 +128,6 @@ dmypy.json
 # Pyre type checker
 .pyre/
 result/
+result/Batch/cora_7
+result/Hop/hop_cora_7
+result/Batch/cora_7

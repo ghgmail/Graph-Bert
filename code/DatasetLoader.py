@@ -171,6 +171,7 @@ class DatasetLoader(dataset):
             wl_embedding = torch.LongTensor(role_ids_list)
             hop_embeddings = torch.LongTensor(hop_ids_list)
             int_embeddings = torch.LongTensor(position_ids_list)
+            # print(raw_embeddings,wl_embedding,hop_embeddings,hop_embeddings)
         else:
             raw_embeddings, wl_embedding, hop_embeddings, int_embeddings = None, None, None, None
 

@@ -27,7 +27,8 @@ class Pretrain_MethodGraphBertNodeClassification(BertPreTrainedModel):
         super(Pretrain_MethodGraphBertNodeClassification, self).__init__(config)
         self.config = config
         # self.bert = MethodGraphBert(config)
-        self.bert=MethodGraphBert.from_pretrained('./result/PreTrained_GraphBert/' + "cora" + '/node_construct_pretrain_graphbert_model/')
+        # self.bert=MethodGraphBert.from_pretrained('./result/PreTrained_GraphBert/' + "cora" + '/node_construct_pretrain_graphbert_model/')#仅仅使用预训练任务一(节点属性重构)的预训练graph_bert模型
+        self.bert=MethodGraphBert.from_pretrained('./result/PreTrained_GraphBert/' + "cora" + '/joint_pretrain_graphbert_model/')#使用联合预训练的预训练模型
         self.res_h = torch.nn.Linear(config.x_size, config.hidden_size)
         self.res_y = torch.nn.Linear(config.x_size, config.y_size)
         self.cls_y = torch.nn.Linear(config.hidden_size, config.y_size)
@@ -73,8 +74,8 @@ class Pretrain_MethodGraphBertNodeClassification(BertPreTrainedModel):
         accuracy = EvaluateAcc('', '')
 
         max_score = 0.0
-        for param in self.bert.parameters():
-            param.requires_grad = False
+        # for param in self.bert.parameters():#把预训练graph_bert模型的参数固定住
+        #     param.requires_grad = False
         for epoch in range(max_epoch):
             t_epoch_begin = time.time()
 

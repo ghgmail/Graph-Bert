@@ -6,7 +6,7 @@ Concrete SettingModule class for a specific experimental SettingModule
 # License: TBD
 
 from code.base_class.setting import setting
-
+import pandas as pd
 
 class Settings(setting):
     fold = None
@@ -15,7 +15,7 @@ class Settings(setting):
         
         # load dataset
         loaded_data = self.dataset.load()
-
+        pd.to_pickle(loaded_data,'./result/preprocess/data_preprocess.pkl')
         # run learning methods
         self.method.data = loaded_data
         learned_result = self.method.run()

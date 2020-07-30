@@ -1,4 +1,5 @@
 import torch
+import torch.nn.functional as F
 import torch.optim as optim
 
 from transformers.modeling_bert import BertPreTrainedModel
@@ -8,7 +9,7 @@ import time
 
 BertLayerNorm = torch.nn.LayerNorm
 
-class MethodGraphBertGraphRecovery(BertPreTrainedModel):
+class MethodGraphBertJointPreTrain(BertPreTrainedModel):#继承的类来自transformers库
     learning_record_dict = {}
     lr = 0.001
     weight_decay = 5e-4
@@ -17,9 +18,10 @@ class MethodGraphBertGraphRecovery(BertPreTrainedModel):
     save_pretrained_path = ''
 
     def __init__(self, config):
-        super(MethodGraphBertGraphRecovery, self).__init__(config)
+        super(MethodGraphBertJointPreTrain, self).__init__(config)
         self.config = config
         self.bert = MethodGraphBert(config)
+        self.cls_y = torch.nn.Linear(config.hidden_size, config.x_size)
         self.init_weights()
 
     def forward(self, raw_features, wl_role_ids, init_pos_ids, hop_dis_ids, idx=None):
@@ -31,12 +33,12 @@ class MethodGraphBertGraphRecovery(BertPreTrainedModel):
             sequence_output += outputs[0][:,i,:]
         sequence_output /= float(self.config.k+1)
 
-        x_hat = sequence_output
+        x_hat = self.cls_y(sequence_output)
         x_norm = torch.norm(x_hat, p=2, dim=1)
         nume = torch.mm(x_hat, x_hat.t())
         deno = torch.ger(x_norm, x_norm)
         cosine_similarity = nume / deno
-        return cosine_similarity
+        return x_hat,cosine_similarity
 
 
     def train_model(self, max_epoch):
@@ -50,9 +52,9 @@ class MethodGraphBertGraphRecovery(BertPreTrainedModel):
             self.train()
             optimizer.zero_grad()
 
-            output = self.forward(self.data['raw_embeddings'], self.data['wl_embedding'], self.data['int_embeddings'], self.data['hop_embeddings'])
-            row_num, col_num = output.size()
-            loss_train = torch.sum((output - self.data['A'].to_dense()) ** 2)/(row_num*col_num)
+            x_hat ,cosine_similarity= self.forward(self.data['raw_embeddings'], self.data['wl_embedding'], self.data['int_embeddings'], self.data['hop_embeddings'])
+            row_num, col_num = cosine_similarity.size()
+            loss_train = F.mse_loss(x_hat, self.data['X'])+torch.sum((cosine_similarity - self.data['A'].to_dense()) ** 2)/(row_num*col_num)
 
             loss_train.backward()
             optimizer.step()
@@ -67,8 +69,8 @@ class MethodGraphBertGraphRecovery(BertPreTrainedModel):
 
         print("Optimization Finished!")
         print("Total time elapsed: {:.4f}s".format(time.time() - t_begin))
-        print("保存图结构恢复的预训练graph_bert模型")
-        self.bert.save_pretrained('./result/PreTrained_GraphBert/' + "cora" + '/graph_recovery_pretrain_graphbert_model/')
+        print("保存两个任务的联合预训练graph_bert模型")
+        self.bert.save_pretrained('./result/PreTrained_GraphBert/' + "cora" + '/joint_pretrain_graphbert_model/')
         return time.time() - t_begin
 
     def run(self):
