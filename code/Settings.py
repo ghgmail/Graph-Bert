@@ -15,7 +15,11 @@ class Settings(setting):
         
         # load dataset
         loaded_data = self.dataset.load()
-        pd.to_pickle(loaded_data,'./result/preprocess/data_preprocess.pkl')
+        # pd.to_pickle(loaded_data,'./result/preprocess/data_preprocess.pkl')
+        print("把预处理的数据存到本地result/cora_pre/cora_pre.pkl")
+        pd.to_pickle(loaded_data,"/mnt/d/zk_files/dd/project/Graph-Bert/result/cora_pre/cora_pre.pkl")
+        print("保存完成！")
+
         # run learning methods
         self.method.data = loaded_data
         learned_result = self.method.run()
