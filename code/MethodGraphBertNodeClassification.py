@@ -9,7 +9,8 @@ import time
 import numpy as np
 
 from code.EvaluateAcc import EvaluateAcc
-
+import pandas as pd
+import numpy as np
 
 BertLayerNorm = torch.nn.LayerNorm
 
@@ -56,7 +57,7 @@ class MethodGraphBertNodeClassification(BertPreTrainedModel):
         if residual_y is not None:
             labels += residual_y
 
-        return F.log_softmax(labels, dim=1)
+        return F.log_softmax(labels, dim=1),sequence_output
 
     def residual_term(self):
         if self.config.residual_type == 'none':
@@ -80,7 +81,7 @@ class MethodGraphBertNodeClassification(BertPreTrainedModel):
             self.train()
             optimizer.zero_grad()
 
-            output = self.forward(self.data['raw_embeddings'], self.data['wl_embedding'], self.data['int_embeddings'], self.data['hop_embeddings'], self.data['idx_train'])
+            output,_ = self.forward(self.data['raw_embeddings'], self.data['wl_embedding'], self.data['int_embeddings'], self.data['hop_embeddings'], self.data['idx_train'])
 
             loss_train = F.cross_entropy(output, self.data['y'][self.data['idx_train']])
             accuracy.data = {'true_y': self.data['y'][self.data['idx_train']], 'pred_y': output.max(1)[1]}
@@ -90,7 +91,7 @@ class MethodGraphBertNodeClassification(BertPreTrainedModel):
             optimizer.step()
 
             self.eval()
-            output = self.forward(self.data['raw_embeddings'], self.data['wl_embedding'], self.data['int_embeddings'], self.data['hop_embeddings'], self.data['idx_val'])
+            output,_ = self.forward(self.data['raw_embeddings'], self.data['wl_embedding'], self.data['int_embeddings'], self.data['hop_embeddings'], self.data['idx_val'])
 
             loss_val = F.cross_entropy(output, self.data['y'][self.data['idx_val']])
             accuracy.data = {'true_y': self.data['y'][self.data['idx_val']],
@@ -99,11 +100,12 @@ class MethodGraphBertNodeClassification(BertPreTrainedModel):
 
             #-------------------------
             #---- keep records for drawing convergence plots ----
-            output = self.forward(self.data['raw_embeddings'], self.data['wl_embedding'], self.data['int_embeddings'], self.data['hop_embeddings'], self.data['idx_test'])
+            output,_ = self.forward(self.data['raw_embeddings'], self.data['wl_embedding'], self.data['int_embeddings'], self.data['hop_embeddings'], self.data['idx_test'])
             loss_test = F.cross_entropy(output, self.data['y'][self.data['idx_test']])
             accuracy.data = {'true_y': self.data['y'][self.data['idx_test']],
                              'pred_y': output.max(1)[1]}
             acc_test = accuracy.evaluate()
+           
 
             self.learning_record_dict[epoch] = {'loss_train': loss_train.item(), 'acc_train': acc_train.item(),
                                                 'loss_val': loss_val.item(), 'acc_val': acc_val.item(),
@@ -112,6 +114,13 @@ class MethodGraphBertNodeClassification(BertPreTrainedModel):
 
             # -------------------------
             if epoch % 10 == 0:
+                #每10个epoch保存整个数据集倒数第二层的embedding结果，embedding为32维（2708,32）
+                print("第",epoch,"个epoch的embedding")
+                _,extracted_embedding = self.forward(self.data['raw_embeddings'], self.data['wl_embedding'], self.data['int_embeddings'], self.data['hop_embeddings'])
+                pd.to_pickle(extracted_embedding,"/mnt/d/zk_files/dd/project/Graph-Bert/result/extracted_embedding/extracted_embedding{:04d}.pkl".format(epoch))
+
+
+
                 print('Epoch: {:04d}'.format(epoch + 1),
                       'loss_train: {:.4f}'.format(loss_train.item()),
                       'acc_train: {:.4f}'.format(acc_train.item()),
@@ -120,6 +129,10 @@ class MethodGraphBertNodeClassification(BertPreTrainedModel):
                       'loss_test: {:.4f}'.format(loss_test.item()),
                       'acc_test: {:.4f}'.format(acc_test.item()),
                       'time: {:.4f}s'.format(time.time() - t_epoch_begin))
+
+        print("最后一个epoch：第",epoch,"个epoch的embedding")
+        _,extracted_embedding = self.forward(self.data['raw_embeddings'], self.data['wl_embedding'], self.data['int_embeddings'], self.data['hop_embeddings'])
+        pd.to_pickle(extracted_embedding,"/mnt/d/zk_files/dd/project/Graph-Bert/result/extracted_embedding/extracted_embedding{:04d}.pkl".format(epoch))
 
         print("Optimization Finished!")
         print("Total time elapsed: {:.4f}s".format(time.time() - t_begin) + ', best testing performance {: 4f}'.format(np.max([self.learning_record_dict[epoch]['acc_test'] for epoch in self.learning_record_dict])) + ', minimun loss {: 4f}'.format(np.min([self.learning_record_dict[epoch]['loss_test'] for epoch in self.learning_record_dict])))
