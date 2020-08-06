@@ -66,6 +66,51 @@ Epoch: 0131 loss_train: 0.0021 acc_train: 1.0000 loss_val: 0.7267 acc_val: 0.790
 Epoch: 0141 loss_train: 0.0019 acc_train: 1.0000 loss_val: 0.7589 acc_val: 0.7867 loss_test: 0.6795 acc_test: 0.8280 time: 0.1412s
 Optimization Finished!
 Total time elapsed: 23.9558s, best testing performance  0.838000, minimun loss  0.624292
+
+20200806实验：
+************ Start ************
+GrapBert, dataset: cora, residual: graph_raw, k: 7, hidden dimension: 32, hidden layer: 2, attention head: 2
+Loading cora dataset...
+Load WL Dictionary
+Load Hop Distance Dictionary
+Load Subgraph Batches
+把预处理的数据存到本地result/cora_pre/cora_pre.pkl
+/home/zk/anaconda3/envs/gbert/lib/python3.6/site-packages/torch/storage.py:34: FutureWarning: pickle support for Storage will be removed in 1.5. Use `torch.save` instead
+  warnings.warn("pickle support for Storage will be removed in 1.5. Use `torch.save` instead", FutureWarning)
+保存完成！
+第 0 个epoch的embedding
+Epoch: 0001 loss_train: 1.9497 acc_train: 0.1429 loss_val: 1.7796 acc_val: 0.3100 loss_test: 1.7147 acc_test: 0.3390 time: 0.2220s
+第 10 个epoch的embedding
+Epoch: 0011 loss_train: 0.0424 acc_train: 1.0000 loss_val: 0.7081 acc_val: 0.7767 loss_test: 0.6449 acc_test: 0.8010 time: 0.1764s
+第 20 个epoch的embedding
+Epoch: 0021 loss_train: 0.0021 acc_train: 1.0000 loss_val: 0.7958 acc_val: 0.7600 loss_test: 0.7868 acc_test: 0.7900 time: 0.1418s
+第 30 个epoch的embedding
+Epoch: 0031 loss_train: 0.0009 acc_train: 1.0000 loss_val: 0.8445 acc_val: 0.7767 loss_test: 0.8166 acc_test: 0.7990 time: 0.1371s
+第 40 个epoch的embedding
+Epoch: 0041 loss_train: 0.0017 acc_train: 1.0000 loss_val: 0.7741 acc_val: 0.7933 loss_test: 0.7084 acc_test: 0.8170 time: 0.1403s
+第 50 个epoch的embedding
+Epoch: 0051 loss_train: 0.0037 acc_train: 1.0000 loss_val: 0.7152 acc_val: 0.7733 loss_test: 0.6525 acc_test: 0.8150 time: 0.1458s
+第 60 个epoch的embedding
+Epoch: 0061 loss_train: 0.0036 acc_train: 1.0000 loss_val: 0.7110 acc_val: 0.7833 loss_test: 0.6407 acc_test: 0.8270 time: 0.1392s
+第 70 个epoch的embedding
+Epoch: 0071 loss_train: 0.0032 acc_train: 1.0000 loss_val: 0.7113 acc_val: 0.7933 loss_test: 0.6232 acc_test: 0.8310 time: 0.1404s
+第 80 个epoch的embedding
+Epoch: 0081 loss_train: 0.0032 acc_train: 1.0000 loss_val: 0.6973 acc_val: 0.7900 loss_test: 0.6041 acc_test: 0.8350 time: 0.1440s
+第 90 个epoch的embedding
+Epoch: 0091 loss_train: 0.0028 acc_train: 1.0000 loss_val: 0.7070 acc_val: 0.7867 loss_test: 0.6171 acc_test: 0.8360 time: 0.1408s
+第 100 个epoch的embedding
+Epoch: 0101 loss_train: 0.0027 acc_train: 1.0000 loss_val: 0.7208 acc_val: 0.7833 loss_test: 0.6295 acc_test: 0.8310 time: 0.1411s
+第 110 个epoch的embedding
+Epoch: 0111 loss_train: 0.0025 acc_train: 1.0000 loss_val: 0.7084 acc_val: 0.7900 loss_test: 0.6252 acc_test: 0.8330 time: 0.1543s
+第 120 个epoch的embedding
+Epoch: 0121 loss_train: 0.0023 acc_train: 1.0000 loss_val: 0.7102 acc_val: 0.8000 loss_test: 0.6204 acc_test: 0.8340 time: 0.1453s
+第 130 个epoch的embedding
+Epoch: 0131 loss_train: 0.0020 acc_train: 1.0000 loss_val: 0.7501 acc_val: 0.7767 loss_test: 0.6582 acc_test: 0.8270 time: 0.1427s
+第 140 个epoch的embedding
+Epoch: 0141 loss_train: 0.0019 acc_train: 1.0000 loss_val: 0.8379 acc_val: 0.7667 loss_test: 0.7177 acc_test: 0.8210 time: 0.1396s
+最后一个epoch：第 149 个epoch的embedding
+Optimization Finished!
+Total time elapsed: 14.6877s, best testing performance  0.840000, minimun loss  0.604125
 ```
 ## 运行结果-图聚类任务
 ```python

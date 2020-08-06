@@ -115,10 +115,19 @@ class DatasetLoader(dataset):
 
         norm_adj = self.adj_normalize(adj + sp.eye(adj.shape[0]))
 
+        '''
+        GAT:
+        idx_train = range(140)
+        idx_val = range(200, 500)
+        idx_test = range(500, 1500)
+        '''
         if self.dataset_name == 'cora':
             idx_train = range(140)
             idx_test = range(200, 1200)
             idx_val = range(1200, 1500)
+            # idx_train = range(140)
+            # idx_val = range(200, 500)
+            # idx_test = range(500, 1500)
         elif self.dataset_name == 'citeseer':
             idx_train = range(120)
             idx_test = range(200, 1200)

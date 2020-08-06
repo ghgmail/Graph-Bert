@@ -83,7 +83,7 @@ class MethodGraphBertNodeClassification(BertPreTrainedModel):
 
             output,_ = self.forward(self.data['raw_embeddings'], self.data['wl_embedding'], self.data['int_embeddings'], self.data['hop_embeddings'], self.data['idx_train'])
 
-            loss_train = F.cross_entropy(output, self.data['y'][self.data['idx_train']])
+            loss_train = F.cross_entropy(output, self.data['y'][self.data['idx_train']])#140
             accuracy.data = {'true_y': self.data['y'][self.data['idx_train']], 'pred_y': output.max(1)[1]}
             acc_train = accuracy.evaluate()
 
@@ -91,7 +91,7 @@ class MethodGraphBertNodeClassification(BertPreTrainedModel):
             optimizer.step()
 
             self.eval()
-            output,_ = self.forward(self.data['raw_embeddings'], self.data['wl_embedding'], self.data['int_embeddings'], self.data['hop_embeddings'], self.data['idx_val'])
+            output,_ = self.forward(self.data['raw_embeddings'], self.data['wl_embedding'], self.data['int_embeddings'], self.data['hop_embeddings'], self.data['idx_val'])#300
 
             loss_val = F.cross_entropy(output, self.data['y'][self.data['idx_val']])
             accuracy.data = {'true_y': self.data['y'][self.data['idx_val']],
@@ -100,7 +100,7 @@ class MethodGraphBertNodeClassification(BertPreTrainedModel):
 
             #-------------------------
             #---- keep records for drawing convergence plots ----
-            output,_ = self.forward(self.data['raw_embeddings'], self.data['wl_embedding'], self.data['int_embeddings'], self.data['hop_embeddings'], self.data['idx_test'])
+            output,_ = self.forward(self.data['raw_embeddings'], self.data['wl_embedding'], self.data['int_embeddings'], self.data['hop_embeddings'], self.data['idx_test'])#1000
             loss_test = F.cross_entropy(output, self.data['y'][self.data['idx_test']])
             accuracy.data = {'true_y': self.data['y'][self.data['idx_test']],
                              'pred_y': output.max(1)[1]}
