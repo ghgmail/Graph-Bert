@@ -59,7 +59,9 @@ class BertEncoder(nn.Module):
     def __init__(self, config):
         super(BertEncoder, self).__init__()
         self.output_attentions = config.output_attentions
-        self.output_hidden_states = config.output_hidden_states
+        self.output_hidden_states = config.output_hidden_states#False
+        # print(self.output_hidden_states)
+        # print(dir(config))
         self.layer = nn.ModuleList([BertLayer(config) for _ in range(config.num_hidden_layers)])
 
     def forward(self, hidden_states, attention_mask=None, head_mask=None, encoder_hidden_states=None, encoder_attention_mask=None, residual_h=None):
