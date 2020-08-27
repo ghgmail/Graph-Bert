@@ -11,6 +11,7 @@ import torch
 #---- 'cora' , 'citeseer', 'pubmed' ----
 
 dataset_name = 'cora'
+# dataset_name = 'day1'
 
 np.random.seed(1)
 torch.manual_seed(1)
@@ -49,7 +50,10 @@ if 1:
         k = 5
         lr = 0.001
         max_epoch = 2000 #2000 # it takes a long epochs to get good results, sometimes can be more than 2000
-
+    elif dataset_name == 'day1':
+        k = 8
+        lr = 0.01
+        max_epoch = 2000 #2000 # it takes a long epochs to converge, probably more than 2000
     x_size = nfeature
     hidden_size = intermediate_size = 32
     num_attention_heads = 2
@@ -110,7 +114,10 @@ if 0:
         k = 5
         lr = 0.001
         max_epoch = 2000 #2000 # it takes a long epochs to converge, probably more than 2000
-
+    elif dataset_name == 'day1':
+        k = 8
+        lr = 0.01
+        max_epoch = 2000 #2000 # it takes a long epochs to converge, probably more than 2000
     x_size = nfeature
     hidden_size = intermediate_size = 32
     num_attention_heads = 2

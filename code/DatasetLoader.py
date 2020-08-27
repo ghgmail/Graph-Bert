@@ -91,13 +91,24 @@ class DatasetLoader(dataset):
         """Load citation network dataset (cora only for now)"""
         print('Loading {} dataset...'.format(self.dataset_name))
 
-        idx_features_labels = np.genfromtxt("{}/node".format(self.dataset_source_folder_path), dtype=np.dtype(str))
-        features = sp.csr_matrix(idx_features_labels[:, 1:-1], dtype=np.float32)
+        if self.dataset_name == 'day1':
+            idx_features_labels = np.genfromtxt("{}/node".format(self.dataset_source_folder_path),delimiter=',', dtype=np.dtype(str))
 
-        one_hot_labels = self.encode_onehot(idx_features_labels[:, -1])
+            # idx_features_labels = np.genfromtxt("./node" ,delimiter=',',dtype=np.dtype(str))
+            features = sp.csr_matrix(idx_features_labels[:, 2:], dtype=np.float32)
+            one_hot_labels = self.encode_onehot(idx_features_labels[:, 1])
+        else:
+            idx_features_labels = np.genfromtxt("{}/node".format(self.dataset_source_folder_path), dtype=np.dtype(str))
+            features = sp.csr_matrix(idx_features_labels[:, 1:-1], dtype=np.float32)
+            one_hot_labels = self.encode_onehot(idx_features_labels[:, -1])
+            
+
 
         # build graph
-        idx = np.array(idx_features_labels[:, 0], dtype=np.int32)
+        if self.dataset_name == 'day1':
+            idx = np.array(idx_features_labels[:, 0], dtype=np.str)
+        else:
+            idx = np.array(idx_features_labels[:, 0], dtype=np.int32)
         idx_map = {j: i for i, j in enumerate(idx)}
         index_id_map = {i: j for i, j in enumerate(idx)}
         edges_unordered = np.genfromtxt("{}/link".format(self.dataset_source_folder_path),
@@ -141,6 +152,10 @@ class DatasetLoader(dataset):
             idx_train = range(5)
             idx_val = range(5, 10)
             idx_test = range(5, 10)
+        elif self.dataset_name == 'day1':
+            idx_train = range(200)
+            idx_test = range(200, 350)
+            idx_val = range(350, 450)
 
         features = torch.FloatTensor(np.array(features.todense()))
         labels = torch.LongTensor(np.where(one_hot_labels)[1])

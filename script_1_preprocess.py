@@ -11,7 +11,7 @@ from code.Settings import Settings
 #---- 'cora' , 'citeseer', 'pubmed' ----
 
 dataset_name = 'cora'
-
+# dataset_name = 'day1'
 np.random.seed(1)
 torch.manual_seed(1)
 
@@ -33,6 +33,10 @@ elif dataset_name == 'pubmed':
     nfeature = 500
     ngraph = 19717
 
+elif dataset_name == 'day1':
+    nclass = 2
+    nfeature = 342
+    ngraph = 3832
 
 #---- Step 1: WL based graph coloring ----
 if 1:
